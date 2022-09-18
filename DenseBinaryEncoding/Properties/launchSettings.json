@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DenseBinaryEncoding (read)": {
+      "commandName": "Project",
+      "commandLineArgs": "AgAA/QAAAPrAwAM="
+    },
+    "DenseBinaryEncoding (write)": {
+      "commandName": "Project"
+    }
+  }
+}
