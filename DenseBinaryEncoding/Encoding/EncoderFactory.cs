@@ -39,7 +39,7 @@ namespace DenseBinaryEncoding.Encoding
             {
                 return new ListEncoder(type);
             }
-            else if (type.IsClass)
+            else if (type.IsClass || type.IsValueType)
             {
                 return new ObjectEncoder(type);
             }

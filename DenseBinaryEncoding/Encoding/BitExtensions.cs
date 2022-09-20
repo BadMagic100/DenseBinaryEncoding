@@ -31,5 +31,18 @@ namespace DenseBinaryEncoding.Encoding
         {
             return b.Range(start, b.Count - start);
         }
+
+        public static string ToBase64String(this BitArray b)
+        {
+            byte[] data = new byte[(int)Math.Ceiling(b.Length / 8f)];
+            b.CopyTo(data, 0);
+            return Convert.ToBase64String(data);
+        }
+
+        public static BitArray Base64ToBitArray(this string s)
+        {
+            byte[] data = Convert.FromBase64String(s);
+            return new BitArray(data);
+        }
     }
 }

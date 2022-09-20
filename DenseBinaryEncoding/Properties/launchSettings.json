@@ -2,7 +2,7 @@
   "profiles": {
     "DenseBinaryEncoding (read)": {
       "commandName": "Project",
-      "commandLineArgs": "AgAA/QAAAPrAwAM="
+      "commandLineArgs": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDNCAAAAAAIAAAQEAEAAH8EAAAAEAAQCAQCgUAgEAgEAoFAIBAICAQCgUAAAAAAAABYSnM7O5kDgQqbmwOAAA==\r\nDgBoZmZmZmbm/gAAAAAAAAAAAQAAAAAAhAADAAD9AAAA+sDAAwBNZW5kZXJidWcAUHVyZSBWZXNzZWwAVm9pZCBJZG9sAAM=\r\nAgA="
     },
     "DenseBinaryEncoding (write)": {
       "commandName": "Project"

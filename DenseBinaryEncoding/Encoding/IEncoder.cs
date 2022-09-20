@@ -12,7 +12,7 @@ namespace DenseBinaryEncoding.Encoding
         /// <summary>
         /// Reads a value from the data buffer starting at the given index
         /// </summary>
-        object GetValue(BitArray bits, int start);
+        object GetValue(BitArray bits, int start = 0);
 
         /// <summary>
         /// Calculates the size in bits needed to encode the value using the value that will be encoded

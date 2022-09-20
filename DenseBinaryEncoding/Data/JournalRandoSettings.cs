@@ -64,6 +64,8 @@
             public bool RegularEntries { get; set; } = true;
             public bool BossEntries { get; set; } = true;
             public bool BonusEntries { get; set; } = true;
+
+            public string[]? RandomizedEnemies;
         }
 
         public PoolSettings Pools { get; set; } = new();
@@ -75,6 +77,8 @@
             public float MinimumCostWeight { get; set; } = 0.25f;
 
             public float MaximumCostWeight { get; set; } = 0.75f;
+
+            public List<double> IndividualCostWeights = new();
         }
 
         public CostSettings Costs { get; set; } = new();

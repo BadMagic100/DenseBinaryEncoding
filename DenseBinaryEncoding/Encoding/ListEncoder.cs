@@ -8,7 +8,7 @@ namespace DenseBinaryEncoding.Encoding
     {
         readonly Type collectionType;
         readonly Type elementType;
-        readonly IEncoder elementEncoder;
+        readonly IEncoder? elementEncoder;
 
         public ListEncoder(Type collectionType)
         {
@@ -25,13 +25,13 @@ namespace DenseBinaryEncoding.Encoding
             {
                 throw new ArgumentException("Collection was not a valid array or list", nameof(collectionType));
             }
-            elementEncoder = EncoderFactory.CreateEncoder(elementType)!;
+            elementEncoder = EncoderFactory.CreateEncoder(elementType);
         }
 
         public int GetInputSize(object value)
         {
-            IEnumerable<object> values = (IEnumerable<object>)value;
-            return 16 + values.Sum(elementEncoder.GetInputSize);
+            IEnumerable values = (IEnumerable)value;
+            return 16 + values.Cast<object>().Sum(e => elementEncoder?.GetInputSize(e) ?? 0);
         }
 
         public int GetOutputSize(BitArray bits, int start)
@@ -47,18 +47,21 @@ namespace DenseBinaryEncoding.Encoding
             ushort numElements = BitConverter.ToUInt16(bytes, 0);
 
             int offset = 16;
-            for (int i = 0; i < numElements; i++)
+            if (elementEncoder != null)
             {
-                offset += elementEncoder.GetOutputSize(bits, start + offset);
+                for (int i = 0; i < numElements; i++)
+                {
+                    offset += elementEncoder.GetOutputSize(bits, start + offset);
+                }
             }
             return offset;
         }
 
         public BitArray GetBits(object value)
         {
-            IEnumerable<object> values = (IEnumerable<object>)value;
+            IEnumerable values = (IEnumerable)value;
 
-            ushort len = (ushort)values.Count();
+            ushort len = (ushort)values.Cast<object>().Count();
             byte[] lenBytes = BitConverter.GetBytes(len);
             if (!BitConverter.IsLittleEndian)
             {
@@ -67,12 +70,15 @@ namespace DenseBinaryEncoding.Encoding
 
             BitArray result = new(lenBytes);
 
-            foreach (object val in values)
+            if (elementEncoder != null)
             {
-                int temp = result.Length;
-                BitArray arr = elementEncoder.GetBits(val);
-                result.Length += arr.Length;
-                arr.CopyTo(result, temp);
+                foreach (object val in values)
+                {
+                    int temp = result.Length;
+                    BitArray arr = elementEncoder.GetBits(val);
+                    result.Length += arr.Length;
+                    arr.CopyTo(result, temp);
+                }
             }
 
             return result;
@@ -91,10 +97,13 @@ namespace DenseBinaryEncoding.Encoding
             ushort numElements = BitConverter.ToUInt16(bytes, 0);
             Array arr = Array.CreateInstance(elementType, numElements);
             int offset = 16;
-            for (int i = 0; i < numElements; i++)
+            if (elementEncoder != null)
             {
-                arr.SetValue(elementEncoder.GetValue(bits, start + offset), i);
-                offset += elementEncoder.GetOutputSize(bits, start + offset);
+                for (int i = 0; i < numElements; i++)
+                {
+                    arr.SetValue(elementEncoder.GetValue(bits, start + offset), i);
+                    offset += elementEncoder.GetOutputSize(bits, start + offset);
+                }
             }
 
             if (collectionType.IsArray)
@@ -104,6 +113,7 @@ namespace DenseBinaryEncoding.Encoding
             else
             {
                 object list = collectionType.GetConstructor(Type.EmptyTypes)!.Invoke(null);
+                // runtime complains if we AddRange because Array is not strongly typed
                 MethodInfo add = collectionType.GetMethod("Add", new Type[] { elementType })!;
                 foreach (object item in arr)
                 {
