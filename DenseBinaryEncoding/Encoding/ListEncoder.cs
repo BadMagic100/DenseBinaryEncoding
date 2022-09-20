@@ -84,7 +84,7 @@ namespace DenseBinaryEncoding.Encoding
             return result;
         }
 
-        public object GetValue(BitArray bits, int start)
+        public object GetValue(BitArray bits, int start = 0)
         {
             BitArray counter = bits.Range(start, 16);
             byte[] bytes = new byte[2];

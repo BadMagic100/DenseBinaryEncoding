@@ -53,7 +53,7 @@ namespace DenseBinaryEncoding.Encoding
                 return Encoder.GetBits(GetMemberValue(value));
             }
 
-            public object GetValue(BitArray bits, int start)
+            public object GetValue(BitArray bits, int start = 0)
             {
                 return Encoder.GetValue(bits, start);
             }
@@ -136,7 +136,7 @@ namespace DenseBinaryEncoding.Encoding
             return result;
         }
 
-        public object GetValue(BitArray bits, int start)
+        public object GetValue(BitArray bits, int start = 0)
         {
             object result = Activator.CreateInstance(objType)!;
 

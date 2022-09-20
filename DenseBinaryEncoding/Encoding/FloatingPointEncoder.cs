@@ -42,7 +42,7 @@ namespace DenseBinaryEncoding.Encoding
             return new BitArray(bytes);
         }
 
-        public override object GetValue(BitArray bits, int start)
+        public override object GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.Range(start, size);
             byte[] bytes = new byte[size / 8];

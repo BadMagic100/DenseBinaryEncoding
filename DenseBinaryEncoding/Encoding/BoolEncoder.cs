@@ -11,7 +11,7 @@ namespace DenseBinaryEncoding.Encoding
             return new BitArray(new bool[] { (bool)value });
         }
 
-        public override object GetValue(BitArray bits, int start)
+        public override object GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.Range(start, 1);
             bool[] bools = new bool[1];

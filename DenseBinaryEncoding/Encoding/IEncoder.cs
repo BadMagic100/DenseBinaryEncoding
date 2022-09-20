@@ -29,7 +29,7 @@ namespace DenseBinaryEncoding.Encoding
     {
         public abstract int Size { get; }
         public abstract BitArray GetBits(object value);
-        public abstract object GetValue(BitArray bits, int start);
+        public abstract object GetValue(BitArray bits, int start = 0);
         public int GetInputSize(object value) => Size;
         public int GetOutputSize(BitArray bits, int start) => Size;
     }

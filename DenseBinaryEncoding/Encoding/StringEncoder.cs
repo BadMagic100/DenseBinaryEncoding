@@ -32,7 +32,7 @@ namespace DenseBinaryEncoding.Encoding
             return new BitArray(System.Text.Encoding.UTF8.GetBytes(finalValue));
         }
 
-        public object GetValue(BitArray bits, int start)
+        public object GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.ReadToEnd(start);
             byte[] chars = new byte[bits2.Count / 8 + 1];
