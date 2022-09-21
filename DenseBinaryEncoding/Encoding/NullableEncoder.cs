@@ -13,12 +13,26 @@ namespace DenseBinaryEncoding.Encoding
 
         public int GetInputSize(object? value)
         {
-            return 1 + innerEncoder?.GetInputSize(value) ?? 0;
+            if (value == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return 1 + innerEncoder?.GetInputSize(value) ?? 0;
+            }
         }
 
         public int GetOutputSize(BitArray bits, int start)
         {
-            return 1 + innerEncoder?.GetOutputSize(bits, start + 1) ?? 0;
+            if (!bits[start])
+            {
+                return 1;
+            }
+            else
+            {
+                return 1 + innerEncoder?.GetOutputSize(bits, start + 1) ?? 0;
+            }
         }
 
         public BitArray GetBits(object? value)

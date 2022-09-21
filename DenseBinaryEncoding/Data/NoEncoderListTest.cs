@@ -18,5 +18,8 @@
     public class NoEncoderListTest
     {
         public List<IFoo> foos = new();
+
+        public int? myNum1;
+        public int? myNum2;
     }
 }

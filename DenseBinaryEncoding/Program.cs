@@ -20,6 +20,8 @@ if (args.Length == 0)
     NoEncoderListTest lt = new();
     lt.foos.Add(new ConcreteFoo("Bar"));
     lt.foos.Add(new ConcreteFoo("Baz"));
+    lt.myNum1 = null;
+    lt.myNum2 = 42;
 
     Console.WriteLine(e1.GetBits(gs).ToBase64String());
     Console.WriteLine();

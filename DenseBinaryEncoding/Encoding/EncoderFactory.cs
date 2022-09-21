@@ -45,7 +45,17 @@ namespace DenseBinaryEncoding.Encoding
             }
             else if (type.IsValueType)
             {
-                return new ObjectEncoder(type);
+                Type? underlyingNullableType = Nullable.GetUnderlyingType(type);
+                if (underlyingNullableType != null)
+                {
+                    // because we deal exclusively in objects, the CLR automatically boxes non-null values as T and null values as null
+                    // so we don't actually need NullableEncoder to know or care about the existance of Nullable<T>
+                    return new NullableEncoder(CreateEncoder(underlyingNullableType));
+                }
+                else
+                {
+                    return new ObjectEncoder(type);
+                }
             }
             else
             {

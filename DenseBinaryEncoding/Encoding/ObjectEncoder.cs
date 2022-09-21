@@ -7,7 +7,7 @@ namespace DenseBinaryEncoding.Encoding
     {
         private record EncodableMember(MemberInfo Member, IEncoder Encoder) : IEncoder
         {
-            public object GetMemberValue(object? parent)
+            public object? GetMemberValue(object? parent)
             {
                 object? result;
                 if (Member.MemberType == MemberTypes.Field)
@@ -19,10 +19,6 @@ namespace DenseBinaryEncoding.Encoding
                     result = ((PropertyInfo)Member).GetValue(parent);
                 }
 
-                if (result == null)
-                {
-                    throw new NullReferenceException("Can't serialize or deserialize null settings values");
-                }
                 return result;
             }
 
