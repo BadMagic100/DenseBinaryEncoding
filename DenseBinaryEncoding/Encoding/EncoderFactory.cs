@@ -39,6 +39,10 @@ namespace DenseBinaryEncoding.Encoding
             {
                 return new NullableEncoder(new ListEncoder(type));
             }
+            else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+            {
+                return new NullableEncoder(new DictEncoder(type));
+            }
             else if (type.IsClass)
             {
                 return new NullableEncoder(new ObjectEncoder(type));

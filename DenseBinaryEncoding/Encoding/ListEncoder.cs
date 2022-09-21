@@ -36,20 +36,19 @@ namespace DenseBinaryEncoding.Encoding
 
         public int GetOutputSize(BitArray bits, int start)
         {
-            BitArray counter = bits.Range(start, 16);
-            byte[] bytes = new byte[2];
-            counter.CopyTo(bytes, 0);
+            BitArray lenBits = bits.Range(start, 16);
+            byte[] lenBytes = new byte[2];
+            lenBits.CopyTo(lenBytes, 0);
             if (!BitConverter.IsLittleEndian)
             {
-                bytes = bytes.Reverse().ToArray();
+                lenBytes = lenBytes.Reverse().ToArray();
             }
-
-            ushort numElements = BitConverter.ToUInt16(bytes, 0);
+            ushort len = BitConverter.ToUInt16(lenBytes, 0);
 
             int offset = 16;
             if (elementEncoder != null)
             {
-                for (int i = 0; i < numElements; i++)
+                for (int i = 0; i < len; i++)
                 {
                     offset += elementEncoder.GetOutputSize(bits, start + offset);
                 }
@@ -86,20 +85,20 @@ namespace DenseBinaryEncoding.Encoding
 
         public object? GetValue(BitArray bits, int start = 0)
         {
-            BitArray counter = bits.Range(start, 16);
-            byte[] bytes = new byte[2];
-            counter.CopyTo(bytes, 0);
+            BitArray lenBits = bits.Range(start, 16);
+            byte[] lenBytes = new byte[2];
+            lenBits.CopyTo(lenBytes, 0);
             if (!BitConverter.IsLittleEndian)
             {
-                bytes = bytes.Reverse().ToArray();
+                lenBytes = lenBytes.Reverse().ToArray();
             }
+            ushort len = BitConverter.ToUInt16(lenBytes, 0);
 
-            ushort numElements = BitConverter.ToUInt16(bytes, 0);
-            Array arr = Array.CreateInstance(elementType, numElements);
+            Array arr = Array.CreateInstance(elementType, len);
             int offset = 16;
             if (elementEncoder != null)
             {
-                for (int i = 0; i < numElements; i++)
+                for (int i = 0; i < len; i++)
                 {
                     arr.SetValue(elementEncoder.GetValue(bits, start + offset), i);
                     offset += elementEncoder.GetOutputSize(bits, start + offset);

@@ -2,7 +2,7 @@
   "profiles": {
     "DenseBinaryEncoding (read)": {
       "commandName": "Project",
-      "commandLineArgs": "AwAAAAAAAAAAACAAAAAAAAEAAAgAAIBwMwICBAAAGAAAICACAAD+CAAAAGAAwEAgEAgEAoFAIBAIBAKBQEAgEAgEAgEAAAAAgJfS3M5O5kCgwubmAEgA\r\newBAMzMzMzMz9wcAAAAAAAAACAAAAAAAIAQYAADoBwAA0AcO/ADApjI3sjI5sbozgFB1cmUgVmVzc2VsAK3e0shAksje2AAG\r\nCwCoAgAACA=="
+      "commandLineArgs": "AwAAAAAAAAAAACAAAAAAAAEAAAgAAIBwMwICBAAAGAAAICACAAD+CAAAAGAAwEAgEAgEAoFAIBAIBAKBQEAgEAgEAgEAAAAAgJfS3M5O5kCgwubmAEgA\r\newBAMzMzMzMz9wcAAAAAAAAACAAAAAAAIAQYAADoBwAA0AcO/ADApjI3sjI5sbozgFB1cmUgVmVzc2VsAK3e0shAksje2AAG\r\nCwCoAgAACA==\r\nCwBciwFoFwNwTQagnQxAAYACANdiAK7JAAA="
     },
     "DenseBinaryEncoding (write)": {
       "commandName": "Project"
