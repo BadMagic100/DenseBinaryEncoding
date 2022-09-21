@@ -33,13 +33,17 @@ namespace DenseBinaryEncoding.Encoding
             }
             else if (type == typeof(string))
             {
-                return new StringEncoder();
+                return new NullableEncoder(new StringEncoder());
             }
             else if (type.IsArray || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
             {
-                return new ListEncoder(type);
+                return new NullableEncoder(new ListEncoder(type));
             }
-            else if (type.IsClass || type.IsValueType)
+            else if (type.IsClass)
+            {
+                return new NullableEncoder(new ObjectEncoder(type));
+            }
+            else if (type.IsValueType)
             {
                 return new ObjectEncoder(type);
             }

@@ -4,9 +4,9 @@ namespace DenseBinaryEncoding.Encoding
 {
     public class StringEncoder : IEncoder
     {
-        public int GetInputSize(object value)
+        public int GetInputSize(object? value)
         {
-            return 8 * (((string)value).Length + 1);
+            return 8 * (((string)value!).Length + 1);
         }
 
         public int GetOutputSize(BitArray bits, int start)
@@ -26,13 +26,13 @@ namespace DenseBinaryEncoding.Encoding
             return 8 * (count + 1);
         }
 
-        public BitArray GetBits(object value)
+        public BitArray GetBits(object? value)
         {
             string finalValue = value + "\0";
             return new BitArray(System.Text.Encoding.UTF8.GetBytes(finalValue));
         }
 
-        public object GetValue(BitArray bits, int start = 0)
+        public object? GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.ReadToEnd(start);
             byte[] chars = new byte[bits2.Count / 8 + 1];

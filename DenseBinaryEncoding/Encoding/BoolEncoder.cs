@@ -6,12 +6,12 @@ namespace DenseBinaryEncoding.Encoding
     {
         public override int Size => 1;
 
-        public override BitArray GetBits(object value)
+        public override BitArray GetBits(object? value)
         {
-            return new BitArray(new bool[] { (bool)value });
+            return new BitArray(new bool[] { (bool)value! });
         }
 
-        public override object GetValue(BitArray bits, int start = 0)
+        public override object? GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.Range(start, 1);
             bool[] bools = new bool[1];

@@ -23,16 +23,16 @@ namespace DenseBinaryEncoding.Encoding
             }
         }
 
-        public override BitArray GetBits(object value)
+        public override BitArray GetBits(object? value)
         {
             byte[] bytes;
             if (size == 32)
             {
-                bytes = BitConverter.GetBytes((float)value);
+                bytes = BitConverter.GetBytes((float)value!);
             }
             else
             {
-                bytes = BitConverter.GetBytes((double)value);
+                bytes = BitConverter.GetBytes((double)value!);
             }
 
             if (!BitConverter.IsLittleEndian)
@@ -42,7 +42,7 @@ namespace DenseBinaryEncoding.Encoding
             return new BitArray(bytes);
         }
 
-        public override object GetValue(BitArray bits, int start = 0)
+        public override object? GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.Range(start, size);
             byte[] bytes = new byte[size / 8];

@@ -68,9 +68,9 @@ namespace DenseBinaryEncoding.Encoding
             range = (ulong)(uint)(max - min) + 1;
         }
 
-        public override BitArray GetBits(object value)
+        public override BitArray GetBits(object? value)
         {
-            uint constrained = (uint)((int)value - min);
+            uint constrained = (uint)((int)value! - min);
             byte[] data = BitConverter.GetBytes(constrained);
             // force the LSB first
             if (!BitConverter.IsLittleEndian)
@@ -85,7 +85,7 @@ namespace DenseBinaryEncoding.Encoding
             return bits;
         }
 
-        public override object GetValue(BitArray bits, int start = 0)
+        public override object? GetValue(BitArray bits, int start = 0)
         {
             BitArray bits2 = bits.Range(start, Size);
             byte[] data = new byte[4];

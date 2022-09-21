@@ -7,7 +7,7 @@ namespace DenseBinaryEncoding.Encoding
     {
         private record EncodableMember(MemberInfo Member, IEncoder Encoder) : IEncoder
         {
-            public object GetMemberValue(object parent)
+            public object GetMemberValue(object? parent)
             {
                 object? result;
                 if (Member.MemberType == MemberTypes.Field)
@@ -26,7 +26,7 @@ namespace DenseBinaryEncoding.Encoding
                 return result;
             }
 
-            public void SetMemberValue(object parent, object value)
+            public void SetMemberValue(object? parent, object? value)
             {
                 if (Member.MemberType == MemberTypes.Field)
                 {
@@ -38,7 +38,7 @@ namespace DenseBinaryEncoding.Encoding
                 }
             }
 
-            public int GetInputSize(object value)
+            public int GetInputSize(object? value)
             {
                 return Encoder.GetInputSize(GetMemberValue(value));
             }
@@ -48,12 +48,12 @@ namespace DenseBinaryEncoding.Encoding
                 return Encoder.GetOutputSize(bits, start);
             }
 
-            public BitArray GetBits(object value)
+            public BitArray GetBits(object? value)
             {
                 return Encoder.GetBits(GetMemberValue(value));
             }
 
-            public object GetValue(BitArray bits, int start = 0)
+            public object? GetValue(BitArray bits, int start = 0)
             {
                 return Encoder.GetValue(bits, start);
             }
@@ -108,7 +108,7 @@ namespace DenseBinaryEncoding.Encoding
             }
         }
 
-        public int GetInputSize(object value)
+        public int GetInputSize(object? value)
         {
             return members.Sum(em => em.GetInputSize(value));
         }
@@ -123,7 +123,7 @@ namespace DenseBinaryEncoding.Encoding
             return offset;
         }
 
-        public BitArray GetBits(object value)
+        public BitArray GetBits(object? value)
         {
             BitArray result = new(0);
             foreach (EncodableMember em in members)
@@ -136,14 +136,14 @@ namespace DenseBinaryEncoding.Encoding
             return result;
         }
 
-        public object GetValue(BitArray bits, int start = 0)
+        public object? GetValue(BitArray bits, int start = 0)
         {
             object result = Activator.CreateInstance(objType)!;
 
             int offset = 0;
             foreach (EncodableMember em in members)
             {
-                object m = em.GetValue(bits, start + offset);
+                object? m = em.GetValue(bits, start + offset);
                 offset += em.GetOutputSize(bits, start + offset);
                 em.SetMemberValue(result, m);
             }

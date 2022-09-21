@@ -28,9 +28,9 @@ namespace DenseBinaryEncoding.Encoding
             elementEncoder = EncoderFactory.CreateEncoder(elementType);
         }
 
-        public int GetInputSize(object value)
+        public int GetInputSize(object? value)
         {
-            IEnumerable values = (IEnumerable)value;
+            IEnumerable values = (IEnumerable)value!;
             return 16 + values.Cast<object>().Sum(e => elementEncoder?.GetInputSize(e) ?? 0);
         }
 
@@ -57,9 +57,9 @@ namespace DenseBinaryEncoding.Encoding
             return offset;
         }
 
-        public BitArray GetBits(object value)
+        public BitArray GetBits(object? value)
         {
-            IEnumerable values = (IEnumerable)value;
+            IEnumerable values = (IEnumerable)value!;
 
             ushort len = (ushort)values.Cast<object>().Count();
             byte[] lenBytes = BitConverter.GetBytes(len);
@@ -84,7 +84,7 @@ namespace DenseBinaryEncoding.Encoding
             return result;
         }
 
-        public object GetValue(BitArray bits, int start = 0)
+        public object? GetValue(BitArray bits, int start = 0)
         {
             BitArray counter = bits.Range(start, 16);
             byte[] bytes = new byte[2];

@@ -29,9 +29,9 @@ if (args.Length == 0)
 }
 else
 {
-    GenerationSettings gs = (GenerationSettings)e1.GetValue(args[0].Base64ToBitArray());
-    JournalRandomizationSettings js = (JournalRandomizationSettings)e2.GetValue(args[1].Base64ToBitArray());
-    NoEncoderListTest lt = (NoEncoderListTest)e3.GetValue(args[2].Base64ToBitArray());
+    GenerationSettings? gs = e1.GetValue(args[0].Base64ToBitArray()) as GenerationSettings;
+    JournalRandomizationSettings? js = e2.GetValue(args[1].Base64ToBitArray()) as JournalRandomizationSettings;
+    NoEncoderListTest? lt = e3.GetValue(args[2].Base64ToBitArray()) as NoEncoderListTest;
 
     JsonSerializerOptions options = new()
     {
