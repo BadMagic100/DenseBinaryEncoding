@@ -4,6 +4,10 @@ namespace DenseBinaryEncoding.Encoding
 {
     public static class EncoderFactory
     {
+        // todo if used - we could use the NullableInfoContext API to determine based on nullability annotations whether a type may be null,
+        // and thus shave off nesting certain types in NullableEncoder (we'd likely also provide a way to indicate this to those who are not
+        // cultured enough to use nullable reference types, e.g. a marker annotation). This approach requires some design changes, however,
+        // as with the current approach null annotations would be lost after 1 level of factory construction.
         public static IEncoder? CreateEncoder(MemberInfo member)
         {
             Type t = member.GetMemberDataType();
